@@ -21,12 +21,12 @@ app.get('/', (req, res) => {
     const planePassword = process.env.PLANE_PASSWORD
     bcrypt.hash(planePassword, 10, function(err, hash) {
 
-      if(err) return res.status(500).json({
+      if(err) return res.status(404).json({
         message: 'Internal Server Error',
       })
         res.status(200).json({
           message: 'Password Hashed Successfully',
-          hashedPassword: hash,
+           hash,
         })
         
         
@@ -37,9 +37,9 @@ app.get('/', (req, res) => {
 
   app.get("/comparePassword",(req,res)=>{
     const planePassword = process.env.PLANE_PASSWORD
-    const hashedPassword =  "$2b$10$LJoUbGWc8zvFa8SEyIhJ1OILHYTTj0GduM/J/Ybd5hC/MBOzagF42"
+    const hash =  "$2b$10$tn73x9HkaAxBZ3C0TjY6z.uyorfHdQjQaicxOxNbG5S0fYh1ckfFq"
 
-    bcrypt.compare(planePassword, hashedPassword, function(err, result) {
+    bcrypt.compare(planePassword, hash, function(err, result) {
 
       if(err) return res.status(500).json({
         message: 'Internal Server Error',
