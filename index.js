@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from './src/db/index.js'
 import cors from 'cors'
 import bcrypt from "bcrypt"
+import jwt  from 'jsonwebtoken';
 dotenv.config()
 
 
@@ -51,6 +52,25 @@ app.get('/', (req, res) => {
   });
   })
 
+  app.post("/accessToken",(req,res)=>{
+    const {email} = req.body;
+    if(!email) return res.status(400).json({massage:"email is required"})
+    const token = jwt.sign({email},process.env.ACCESS_TOKEN,{expiresIn : "6h"})
+    res.status(200).json({
+      message : "access token created",
+      accessToken : token,
+    })
+  })
+
+  app.post("/refreshToken" ,(req,res)=>{
+    const {email} = req.body;
+    if(!email) return res.status(400).json({massage:"email is required"})
+      const token = jwt.sign({email},process.env.REFRESH_TOKEN,{expiresIn: "7d"})
+    res.status(200).json({
+      message : "refresh token created",
+      refreshToken : token,
+    })
+  })
 
 
 
