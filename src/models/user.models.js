@@ -20,4 +20,4 @@ UserSchema.pre("save", function(next){
     next()    
 })
 
-export default mongoose.model("Users", UserSchema)
+export default mongoose.model("User", UserSchema)
